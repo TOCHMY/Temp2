@@ -1,0 +1,81 @@
+import java.util.Scanner;
+public class Temp2 {
+
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		//Skickar initial hälsning till användare och ber användare göra ett val
+		int val = greeting(input);
+		//Så länge användaren inte väljer att avsluta programmet(med input 0) så fortsätter programmet köra
+		while (val != 0) { 
+			double next;
+			//Gör respektive uträkning beroende på user input
+			switch (val) {
+				case 1:
+					next = userInput(input, "Fahrenheit");
+					System.out.println("Celsius: " + fahrenheitToCelsius(next)+ "\n");
+					break;
+				case 2:
+					next = userInput(input, "Celsius");
+					System.out.println("Fahrenheit: " + celsiusToFahrenheit(next) + "\n");
+					break;
+				case 3:
+					next = userInput(input, "Kelvin");
+					System.out.println("Celsius: " + kelvinToCelsius(next) + "\n");
+					break;
+				case 4: 	
+					next = userInput(input, "Celsius");
+					System.out.println("Kelvin: " + celsiusToKelvin(next) + "\n");
+					break;
+				default:
+					System.out.println("Ogiltigt val. Försök igen!\n");
+					break;
+			}
+			/*ser till att programmet körs igen från "startmenyn", annars hade värdet på val inte ändrats efter ett case utförts
+			och user hade vart fast i ett case. */
+			val = greeting(input);         
+		}
+		//Programmet avslutas
+		System.out.println("Välkommen åter!");
+		input.close();
+	}
+	//Respektive uträkningar
+	public static double celsiusToFahrenheit(double celsius) {
+		double fah = celsius * 1.8 + 32;
+		return fah;
+	}
+	public static double fahrenheitToCelsius(double fahrenheit) {
+		double cel = (fahrenheit - 32) / 1.8;
+		return cel;
+	}
+	public static double celsiusToKelvin(double celsius) {
+		double kelvin = celsius + 273.15;
+		return kelvin;
+	}
+	public static double kelvinToCelsius(double kelvin) {
+		double celsius = kelvin - 273.15;
+		return celsius;
+	}
+	//Metod för initial hälsning med användarens input som parameter
+	public static int greeting(Scanner input) {
+		
+		String s = "Program-meny:" +  
+		"\n1. Konvertera från Fahrenheit till Celsius" +
+		"\n2. Konvertera från Celsius till Fahrenheit" +
+		"\n3. Konvertera från Kelvin till Celsius" +
+		"\n4. Konvertera från Celsius till Kelvin" +
+		"\n0. Avsluta programmet" +
+		"\nAnge ditt val (0, 1, 2, 3 eller 4):";
+		System.out.println(s);
+		int val = input.nextInt();
+		return val;
+	}
+	/*En metod som tar användarens inputgrader samt vilken typ av temperatur och skriver ut resultatet, samt returnernar en input
+	så att programmet kan fortsätta köras med användarens nästa val. Detta är optimalt eftersom att next definieras för 
+	varje case som resultatet av userInput() och varje respektive uträkningsmetod i varje case tar resultatet från 
+	next = userInput() som parameter i samma case.*/
+	public static double userInput(Scanner input, String s) {
+		System.out.println("Ange antal grader i " + s + ": ");
+		double next = input.nextDouble();
+		return next;
+	}
+}
